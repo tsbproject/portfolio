@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -7,14 +7,13 @@ import {
   faMedium,
   faStackOverflow,
 } from "@fortawesome/free-brands-svg-icons";
-import { Box, Flex, HStack, Link } from "@chakra-ui/react";
+import { Box, HStack, Link } from "@chakra-ui/react";
 
 const socials = [
-  { 
+  {
     // id:"1",
     icon: faEnvelope,
     url: "mailto: tsbolarinwa@gmail.com",
-    
   },
   {
     // id:"2",
@@ -38,25 +37,7 @@ const socials = [
   },
 ];
 
-const Header = ( {} ) => {
-  // const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  // const [prevScrollPos, setPrevScrollPos] = useState(0);
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const currentScrollPos = window.pageYOffset;
-  //     setIsHeaderVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
-  //     setPrevScrollPos(currentScrollPos);
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [prevScrollPos]);
- 
- 
+const Header = ({}) => {
   const handleClick = (anchor) => () => {
     const id = `${anchor}-section`;
     const element = document.getElementById(id);
@@ -70,7 +51,7 @@ const Header = ( {} ) => {
 
   return (
     <Box
-      position="relative"
+      position=""
       top={0}
       left={0}
       right={0}
@@ -79,8 +60,6 @@ const Header = ( {} ) => {
       transitionDuration=".3s"
       transitionTimingFunction="ease-in-out"
       backgroundColor="#18181b"
-     
-    
     >
       <Box color="white" maxWidth="1280px" margin="0 auto">
         <HStack
@@ -88,54 +67,26 @@ const Header = ( {} ) => {
           py={4}
           justifyContent="space-between"
           alignItems="center"
-        
-         
         >
-        
-
-      
-       
           <nav>
-           <HStack spacing={4}
-             listStyleType="none"
-           > 
-             
-              
+            <HStack spacing={4} listStyleType="none">
               {socials.map((social, i) => (
-               <Link  key={i}
-                 href={social.url} target="_blank" rel="noopener noreferrer">
-                <FontAwesomeIcon icon={social.icon} />
+                <Link
+                  key={i}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FontAwesomeIcon icon={social.icon} />
                 </Link>
-
-                  
-                
               ))}
-     
-       
-        
-
-            
-            
-                
-                
-                
-                
-                
-             
-             
-           </HStack>
-            
+            </HStack>
           </nav>
           <nav>
-            
-            <HStack spacing={8}
-              listStyleType="none"
-            >
-             
-             <Link onClick={handleClick("projects-section")}>Project</Link>
-             <Link onClick={handleClick("contactme-section")}>Contact me</Link>
-             
-             </HStack>
+            <HStack spacing={8} listStyleType="none">
+              <Link onClick={(anchor) => handleClick("projects")}>Project</Link>
+              <Link onClick={(anchor) => handleClick("contactme")}>Contact Me</Link>
+            </HStack>
           </nav>
         </HStack>
       </Box>

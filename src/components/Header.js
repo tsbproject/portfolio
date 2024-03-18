@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -11,33 +11,55 @@ import { Box, HStack, Link } from "@chakra-ui/react";
 
 const socials = [
   {
-    // id:"1",
     icon: faEnvelope,
     url: "mailto: tsbolarinwa@gmail.com",
   },
   {
-    // id:"2",
     icon: faGithub,
     url: "https://github.com/tsbproject",
   },
   {
-    // id:"3",
     icon: faLinkedin,
     url: "https://www.linkedin.com/https://www.linkedin.com/in/tayo-bolarinwa-a6b1252a5/",
   },
   {
-    // id:"4",
     icon: faMedium,
     url: "https://medium.com",
   },
   {
-    // id:"5",
     icon: faStackOverflow,
     url: "https://stackoverflow.com",
   },
 ];
 
 const Header = ({}) => {
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    let scrollTimeout;
+
+    const handleScroll = () => {
+      setIsScrolling(true);
+      setIsVisible(false);
+
+      clearTimeout(scrollTimeout);
+
+      scrollTimeout = setTimeout(() => {
+        setIsScrolling(false);
+        setIsVisible(true);
+      }, 150); 
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
+
+
   const handleClick = (anchor) => () => {
     const id = `${anchor}-section`;
     const element = document.getElementById(id);
@@ -51,15 +73,16 @@ const Header = ({}) => {
 
   return (
     <Box
-      position=""
-      top={0}
+      position="fixed"
+      top={isVisible ? 0 : "-100px"}
       left={0}
       right={0}
       translateY={0}
-      transitionProperty="transform"
+      transitionProperty="top"
       transitionDuration=".3s"
       transitionTimingFunction="ease-in-out"
       backgroundColor="#18181b"
+      zIndex="999"
     >
       <Box color="white" maxWidth="1280px" margin="0 auto">
         <HStack
@@ -84,8 +107,8 @@ const Header = ({}) => {
           </nav>
           <nav>
             <HStack spacing={8} listStyleType="none">
-              <Link onClick={(anchor) => handleClick("projects")}>Project</Link>
-              <Link onClick={(anchor) => handleClick("contactme")}>Contact Me</Link>
+              <Link onClick={handleClick("projects")}>Projects</Link>
+              <Link onClick={handleClick("contactme")}>Contact Me</Link>
             </HStack>
           </nav>
         </HStack>
@@ -93,4 +116,5 @@ const Header = ({}) => {
     </Box>
   );
 };
+
 export default Header;

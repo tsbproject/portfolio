@@ -1,4 +1,4 @@
-import {createContext, useContext, useState} from "react";
+import { createContext, useContext, useState } from "react";
 
 const AlertContext = createContext(undefined);
 
@@ -8,16 +8,15 @@ export const AlertProvider = ({ children }) => {
     type: 'success',
     message: '',
     userName: '', // New state to store user's name
-    
-    });
-    const onOpen = (type, message, firstName) => {
-      setState({ isOpen: true, type, message, userName }); // Include userName in the state
-    };
-  
-    const onClose = () => {
-      setState({ isOpen: false, type: '', message: '',userName: '' });
-    };
-    
+  });
+
+  const onOpen = (type, message, userName) => {
+    setState({ isOpen: true, type, message, userName }); // Include userName in the state
+  };
+
+  const onClose = () => {
+    setState({ isOpen: false, type: '', message: '', userName: '' });
+  };
 
   // Value to be provided by the context
   const value = {
@@ -27,13 +26,7 @@ export const AlertProvider = ({ children }) => {
   };
 
   return (
-    <AlertContext.Provider
-      value={{
-        ...state,
-        onOpen: (type, message) => setState({ isOpen: true, type, message }),
-        onClose: () => setState({ isOpen: false, type: '', message: '' }),
-      }}
-    >
+    <AlertContext.Provider value={value}>
       {children}
     </AlertContext.Provider>
   );
